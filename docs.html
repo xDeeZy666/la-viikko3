@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>xDeeZy's Server Documentation</title>
+  <style>
+    body { max-width: 800px; margin: 40px auto; padding: 0 20px; font-family: sans-serif;
+           line-height: 1.6; background: #0d0d0d; color: #e6e6e6; }
+    h1, h2 { color: #e53935; }
+    h1 { border-bottom: 2px solid #e53935; }
+    a { color: #ff8a80; }
+    code { background: #1a1a1a; color: #ff8a80; }
+  </style>
+</head>
+<body>
+  <h1>Week3 Documentation</h1>
+  <p><a href="./">← Back to the status report</a></p>
+
+  <h2>Commands I used</h2>
+  <ul>
+    <li><code>date '+%Y-%m-%d %H:%M:%S %Z'</code> – shows the current date, time and time zone</li>
+    <li><code>uptime -p</code> – shows how long the server has been running since the last boot</li>
+    <li><code>df / --output=pcent | tail -n 1</code> – shows disk usage of the root filesystem, and the pipe passes
+the output to tail -n 1, which keeps only the last line</li>
+    <li><code>free -m | awk '/^Mem:/ {print $2, $7}'</code> – shows memory usage in megabytes, and awk picks the
+total and available RAM from the Mem: line</li>
+  </ul>
+
+  <h2>How it works</h2>
+  <p>status.sh is a Bash script that collects the server information with Linux commands and stores the results in 
+variables and writes an HTML report.</p>
+
+  <p>The function disk_status takes the root filesystem usage percentage as input and uses an if statement to
+compare it to 80.</p>
+  
+  <p>Cron runs the script once per minute. It's enabled at boot, so the report keeps updating after reboot.</p>
+
+  <h2>Test results</h2>
+  <ul>
+    <li>Disk status with 50%: OK</li>
+    <li>Disk status with 80%: WARNING, otherwise OK</li>
+    <li>Disk status with 90%: WARNING</li>
+    <li>Automatic updates: the generation time changed from 11:32 to 11:34 without running the script manually</li>
+    <li>Reboot test: after reboot the site opened normally and uptime showed 'up 1 minute'. </li>
+  </ul>
+
+  <h2>What I learned</h2>
+  <p>how to combine commands with pipes. E.g free -m | awk picks only the needed values from the output, so the
+script can store just the numbers in variables instead of the whole table</p> </body> </html>
