@@ -32,19 +32,20 @@ total and available RAM from the Mem: line</li>
 variables and writes an HTML report.</p>
 
   <p>The function disk_status takes the root filesystem usage percentage as input and uses an if statement to
-compare it to 80.</p>
+compare it to 80. If usage is 80% or more, it returns 'WARNING', otherwise 'OK'.</p>
   
   <p>Cron runs the script once per minute. It's enabled at boot, so the report keeps updating after reboot.</p>
 
   <h2>Test results</h2>
   <ul>
     <li>Disk status with 50%: OK</li>
-    <li>Disk status with 80%: WARNING, otherwise OK</li>
+    <li>Disk status with 80%: WARNING</li>
     <li>Disk status with 90%: WARNING</li>
     <li>Automatic updates: the generation time changed from 11:32 to 11:34 without running the script manually</li>
-    <li>Reboot test: after reboot the site opened normally and uptime showed 'up 1 minute'. </li>
+    <li>Reboot test: after reboot the site opened normally and uptime showed 'up 1 minute' and the report kept
+updating automatically. </li>
   </ul>
 
   <h2>What I learned</h2>
-  <p>how to combine commands with pipes. E.g free -m | awk picks only the needed values from the output, so the
+  <p>How to combine commands with pipes. E.g free -m | awk picks only the needed values from the output, so the
 script can store just the numbers in variables instead of the whole table</p> </body> </html>
