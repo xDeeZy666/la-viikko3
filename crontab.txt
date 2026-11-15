@@ -1,0 +1,2 @@
+# Regenerate the server status report every minute
+* * * * * /home/ubuntu/viikko3/status.sh >> /home/ubuntu/viikko3/cron.log 2>&1
